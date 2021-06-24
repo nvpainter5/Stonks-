@@ -25,7 +25,6 @@ import plotly.figure_factory as ff
 from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
 from fbprophet.plot import add_changepoints_to_plot
-import data_plot
 
 # check if the library folder already exists, to avoid building everytime you load the pahe
 if not os.path.isdir("/tmp/ta-lib"):
