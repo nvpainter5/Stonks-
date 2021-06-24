@@ -309,102 +309,6 @@ def snp_500():
 
 
 #---------------------------------------------------------------------#
-def crypto():
-
-    coin_col, currency_col = st.beta_columns(2)
-    side = st.sidebar
-    coins = coin_col.multiselect('Select the cryptos you want to watch', ['1INCH',
-'AAVE', 'ADA', 'ALGO', 'ANKR', 'ATOM', 'BAL', 'BAND', 'BAT', 'BCH', 'BNT', 'BSV', 'BTC', 'Celo', 'CGLD', 'COMP', 'CRV', 'CTSI', 'CVC', 'DAI', 'DASH', 'DNT', 'ENJ', 'DOGE',
-'EOS', 'ETC', 'ETH', 'FORTH', 'FIL', 'GRT', 'GNT', 'ICP', 'KNC', 'LINK', 'LOOM', 'LRC', 'LTC', 'MANA', 'MATIC', 'MIR', 'MKR', 'NMR', 'NKN', 'NU', 'OGN', 'OMG', 'OXT',
-'REN', 'REP', 'RLC', 'SUSHI', 'SKL', 'SNX', 'STORJ', 'TRB', 'USDC', 'USDT', 'UMA', 'UNI', 'WBTC', 'XLM', 'XRP', 'XTZ', 'YFI', 'ZEC', 'ZRX',])
-    
-    currency = currency_col.selectbox('Choose a currency', ['USD', 'EUR', 'GBP'])
-
-
-    date_picker = st.sidebar.date_input('Choose Date Range', [dt.date.today() - dt.timedelta(days=30), dt.date.today() + dt.timedelta(days=1)], min_value=dt.date.today() - dt.timedelta(days=365), max_value=dt.date.today() + dt.timedelta(days=1))
-
-
-    date_list = []
-    increment_date = date_picker[1]
-    while increment_date != date_picker[0]:
-        increment_date -= dt.timedelta(days=1)
-        date_list.append(increment_date)
-
-
-    # format_string = coin_symbol + '-' + currency
-    # append the currency to each coin in the list
-    for i in range(len(coins)):
-        coins[i] = coins[i] + '-' + currency
-
-
-    # populate a coin list
-    coin_list = []
-    for coin in coins:
-        new_coin = Coin(coin, date_picker[0], date_picker[1])
-        coin_list.append(new_coin)
-
-
-    display_data = {}
-    rename = {}
-    if len(coin_list) != 0:
-        k = 0
-        for coin in coin_list:
-            # set up key and assign empty list in dictionary
-            key = coin.get_coin_name()
-            display_data.setdefault(key, [])
-
-            rename[0] = key
-
-            history = data_plot.get_historic_info(coin.get_coin_name(), date_picker[0], date_picker[1], 86400)
-            data_frame_of_history = pd.DataFrame(history)
-            fig = go.FigureWidget(data=[go.Candlestick(x=date_list,
-                    low=data_frame_of_history[1],
-                    high=data_frame_of_history[2],
-                    open=data_frame_of_history[3],
-                    close=data_frame_of_history[4])])
-            
-            fig.update_layout(
-                title=coin.get_coin_name() +' stock price',
-                yaxis_title=coin.get_coin_name() +' price',
-                xaxis_title='Date'
-            )
-
-            display_data[key].append(fig)
-
-            daily_stats = data_plot.twent_four_hr_info(coin.get_coin_name())
-            data_frame_of_stats = pd.DataFrame(daily_stats, index=[0])
-            data_frame_of_stats = data_frame_of_stats.T.rename(rename, axis='columns')
-            display_data[key].append(data_frame_of_stats) 
-
-            order_book = data_plot.order_book_info(coin.get_coin_name())
-            data_frame_of_order_book = pd.DataFrame(order_book, index=[0])
-            data_frame_of_order_book = data_frame_of_order_book.T.rename(rename, axis='columns')
-            display_data[key].append(data_frame_of_order_book)
-
-            ticker = data_plot.ticker_info(coin.get_coin_name())
-            data_frame_of_ticker = pd.DataFrame(ticker, index=[0])
-            data_frame_of_ticker = data_frame_of_ticker.T.rename(rename, axis='columns')
-            display_data[key].append(data_frame_of_ticker)
-
-            k += 1
-        
-        for key in display_data:
-            st.write("## " + key)
-            st.plotly_chart(display_data[key][0], use_container_width=True)
-
-            #coin_info = st.beta_expander("More info for - " + key)
-            st.write("More info for - " + key)
-            st.write("### 24hr Stats:")
-            st.write(display_data[key][1])
-
-            st.write("### Order Book:")
-            st.write(display_data[key][2])
-
-            st.write("### Ticker Info:")
-            st.write(display_data[key][3])
-
-def placeholder():
-
     st.write('---')
     
 
@@ -422,4 +326,4 @@ elif option == "Stocks":
 
 elif option == "Cryptocurrency":
 
-    st.title("Stonks!")
+    st.title("Coming Soon!")
