@@ -11,9 +11,6 @@ from plotly.subplots import make_subplots
 import pandas as pd
 from pandas_datareader import data as wb
 import os
-from ta.volatility import BollingerBands
-from ta.trend import MACD
-from ta.momentum import RSIIndicator
 from PIL import Image
 import pandas as pd
 import base64
@@ -186,12 +183,22 @@ def snp_500():
         fig = go.Figure()
         st.write('**Stock Moving Average Convergence Divergence (MACD)**')
         st.markdown(" It can be used as a generic oscillator for any univariate series, not only price. Typically MACD is set as the difference between the 12-period simple moving average (SMA) and 26-period simple moving average (MACD = 12-period SMA − 26-period SMA), or “fast SMA — slow SMA”.The MACD has a positive value whenever the 12-period SMA is above the 26-period SMA and a negative value when the 12-period SMA is below the 26-period SMA. The more distant the MACD is above or below its baseline indicates that the distance between the two SMAs is growing.Why are the 12-period SMA called the “fast SMA” and the 26-period SMA the “slow SMA”? This is because the 12-period SMA reacts faster to the more recent price changes, than the 26-period SMA.")        
-        macd = MACD(data['Close']).macd()
+        selt = data['Close']
+        exp1 = selt.ewm(span=12, adjust=False).mean()
+        exp2 = selt.ewm(span=26, adjust=False).mean()
+        exp3 = selt.ewm(span=9, adjust=False).mean()
+        macd = exp1 - exp2
+        macd.plot(label = selected_company, color = 'g')
+        ax = exp3.plot(label='Signal Line', color='r')
+        pl = selt.plot(ax=ax, secondary_y=True, label=selected_company)
+     
         fig.add_trace(go.Scatter(x=data['Date'], y=macd))
         fig.layout.update(xaxis_rangeslider_visible=True)
-        st.plotly_chart(fig)
-    plot_macd()
+        st.plotly_chart(fig, Color = 'green')
     
+    plot_macd()
+
+
     # -----------------------------------------------------------------------
 
     # RSI
@@ -199,11 +206,23 @@ def snp_500():
         fig = go.Figure()
         st.write('**Stock Relative Strength Index (RSI)**')
         st.markdown("It measures the magnitude of recent price changes to evaluate overbought or oversold conditions. It is displayed as an oscillator and can have a reading from 0 to 100. The general rules are: RSI >= 70: a security is overbought or overvalued and may be primed for a trend reversal or corrective pullback in price. RSI <= 30: an oversold or undervalued condition.")
-        rsi = RSIIndicator(data['Close']).rsi()
+        
+    
+        delta = data['Close'].diff()
+        up = delta.clip(lower=0)
+        down = -1*delta.clip(upper=0)
+        ema_up = up.ewm(com=13, adjust=False).mean()
+        ema_down = down.ewm(com=13, adjust=False).mean()
+        rs = ema_up/ema_down
+
+        rsi = 100 - (100/(1 + rs))
+
         fig.add_trace(go.Scatter(x=data['Date'], y=rsi))
         fig.layout.update(xaxis_rangeslider_visible=True)
         st.plotly_chart(fig)
+    
     plot_rsi()
+    
     # -----------------------------------------------------------------------
 
     #  Stock Growth (%)
