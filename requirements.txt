@@ -14,4 +14,3 @@ altair==4.1.0
 plot-data==0.5.11
 bs4==0.0.1
 requests==2.25.1
-cbpro
