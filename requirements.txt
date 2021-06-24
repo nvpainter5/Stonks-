@@ -7,7 +7,6 @@ scipy==1.7.0
 robin_stocks==2.0.4
 fbprophet==0.7.1
 numpy==1.21.0
-TA-Lib==0.4.20
 cryptocoin==0.0.1
 altair==4.1.0
 plot-data==0.5.11
