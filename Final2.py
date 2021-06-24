@@ -25,7 +25,6 @@ import plotly.figure_factory as ff
 from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
 from fbprophet.plot import add_changepoints_to_plot
-from crypto_coin import Coin
 import data_plot
 
 # check if the library folder already exists, to avoid building everytime you load the pahe
@@ -72,8 +71,7 @@ st.title("Stonks!")
 st.write('---')
 
 st.markdown('''
-            The web application provides information metrics and forecast on the select stock & analyzes performance. It also provides an option to view a dashboard for Cryptocurrencies
-            available on Coinbase, and gives insights on each coin.
+            The web application provides information metrics and forecast on the select stock & analyzes performance.
             ''')
 
 
@@ -424,4 +422,4 @@ elif option == "Stocks":
 
 elif option == "Cryptocurrency":
 
-    crypto()
+    st.title("Stonks!")
