@@ -271,7 +271,9 @@ def snp_500():
 
 #---------------------------------------------------------------------#
     st.write('---')
-    
+def placeholder():
+
+    st.write('---')    
 
 option = st.sidebar.selectbox(
     "Which asset would you like to choose?",
