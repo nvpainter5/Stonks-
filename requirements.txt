@@ -5,6 +5,7 @@ matplotlib==3.4.2
 plotly==5.0.0
 scipy==1.7.0
 robin_stocks==2.0.4
+holidays==0.9.12
 pystan==2.19.1.1
 fbprophet==0.5
 numpy==1.21.0
