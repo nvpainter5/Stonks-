@@ -256,10 +256,7 @@ def snp_500():
     fig1 = plot_plotly(m, forecast)
     st.plotly_chart(fig1)
 
-    st.subheader('Forecast Components')
-    fig2 = m.plot_components(forecast)
-    st.write(fig2)
-
+    
     f"""### News for **{selected_company}**"""
     r = requests.get(f"https://api.stocktwits.com/api/2/streams/symbol/{selected_company}.json")
     datar = r.json()
