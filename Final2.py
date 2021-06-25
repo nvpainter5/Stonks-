@@ -122,7 +122,7 @@ def snp_500():
         fig.add_trace(go.Scatter(x=data['Date'], y=data['Adj Close']))
         fig.update_layout(
         title={
-                    'text': "Stock Price Over Past Three Years",
+                    'text': "Stock Price Over Past Five Years",
                     'y':0.9,
                     'x':0.5,
                     'xanchor': 'center',
