@@ -1,7 +1,7 @@
 streamlit==1.4.0
 pandas-datareader==0.9.0
 pandas==1.2.5
-yfinance==0.1.59
+yfinance==0.1.62
 matplotlib==3.4.2
 plotly==5.0.0
 scipy==1.7.0
